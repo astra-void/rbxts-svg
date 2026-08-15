@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    // One project, one JSX factory. React's is chosen because React is the one
+    // that cannot do without it; the Vide half calls its components directly,
+    // which is what `Vide.jsx` does for a function component anyway. See the
+    // comment in `src/Both.tsx` — this fixture is about module resolution and
+    // raster identity, not about JSX ergonomics.
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "noLib": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "typeRoots": ["node_modules/@rbxts"],
+    "rootDir": "src",
+    "outDir": "out",
+    "declaration": false,
+    "preserveSymlinks": true,
+    "baseUrl": ".",
+    // pnpm exposes one physical copy of a shared dependency by several routes —
+    // this project's own `node_modules`, and each Lucide package's nested one —
+    // and roblox-ts names whichever route TypeScript resolved. Pinning them
+    // here keeps the emitted requires pointing at the top-level copy, which is
+    // also what proves the two Lucide packages are sharing one `@rbxts/svg`
+    // rather than each carrying its own. Same note as `examples/vide`.
+    "paths": {
+      "@rbxts/react": ["node_modules/@rbxts/react"],
+      "@rbxts/svg": ["node_modules/@rbxts/svg"],
+      "@rbxts/vide": ["node_modules/@rbxts/vide"]
+    }
+  },
+  "include": ["src"]
+}

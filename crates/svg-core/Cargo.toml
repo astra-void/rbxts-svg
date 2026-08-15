@@ -1,0 +1,14 @@
+[package]
+name = "svg-core"
+description = "Framework-neutral semantic vector graphics model for @rbxts/svg"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# svg-core is the semantic vocabulary shared by every other crate. It must stay
+# free of Node.js, napi-rs, Roblox, React and serialization concerns. Adding a
+# dependency here is an architectural decision, not a convenience.
+[dependencies]
+bitflags = { workspace = true }

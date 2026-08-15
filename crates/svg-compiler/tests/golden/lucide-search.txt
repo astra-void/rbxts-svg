@@ -1,0 +1,24 @@
+viewBox 0 0 24 24
+preserveAspectRatio XMidYMid Meet
+features FeatureFlags(USES_CURRENT_COLOR | HAS_STROKE | MONOCHROME)
+shapes 2
+
+shape 0
+  paintOrder FillThenStroke
+  fill none
+  stroke currentColor opacity 1.0000 width 2.0000 cap Round join Round miter 4.0000
+  commands 2
+    M 21.0000 21.0000
+    L 16.6600 16.6600
+
+shape 1
+  paintOrder FillThenStroke
+  fill none
+  stroke currentColor opacity 1.0000 width 2.0000 cap Round join Round miter 4.0000
+  commands 6
+    M 19.0000 11.0000
+    C 19.0000 15.4183 15.4183 19.0000 11.0000 19.0000
+    C 6.5817 19.0000 3.0000 15.4183 3.0000 11.0000
+    C 3.0000 6.5817 6.5817 3.0000 11.0000 3.0000
+    C 15.4183 3.0000 19.0000 6.5817 19.0000 11.0000
+    Z

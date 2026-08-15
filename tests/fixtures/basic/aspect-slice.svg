@@ -1,0 +1,4 @@
+<!-- Cover the target and crop the overflow, anchored at the top-left. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12" preserveAspectRatio="xMinYMin slice">
+  <rect x="0" y="0" width="24" height="12" fill="#336699"/>
+</svg>

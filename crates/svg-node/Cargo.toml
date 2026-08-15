@@ -1,0 +1,27 @@
+[package]
+name = "svg-node"
+description = "Node.js native bindings for the @rbxts/svg compiler"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+svg-compiler = { workspace = true }
+svg-core = { workspace = true }
+svg-ir = { workspace = true }
+# The reference rasterizer, exposed so build tooling and the Luau test bundler
+# can produce golden raster fixtures without a separate Rust invocation. It is
+# never how Roblox renders anything.
+svg-raster = { workspace = true }
+blake3 = { workspace = true }
+napi = { version = "3", default-features = false, features = ["napi4"] }
+napi-derive = "3"
+
+[build-dependencies]
+napi-build = "2"

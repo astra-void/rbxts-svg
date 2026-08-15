@@ -1,0 +1,40 @@
+{
+  "name": "@rbxts/svg-compiler",
+  "version": "0.1.0",
+  "description": "Build-time SVG compiler for @rbxts/svg. Wraps the native binary behind a stable TypeScript API.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./paths": {
+      "types": "./dist/paths.d.ts",
+      "default": "./dist/paths.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "rbxts-svg": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@rbxts/svg-native": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

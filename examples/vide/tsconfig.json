@@ -1,0 +1,64 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "jsxFactory": "Vide.jsx",
+    "jsxFragmentFactory": "Vide.Fragment",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "noLib": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "baseUrl": ".",
+    // A monorepo-only correction, and the reason it is here is worth stating.
+    //
+    // roblox-ts turns a resolved module into a `require` path by locating the
+    // package inside this project's `node_modules`, and under pnpm the same
+    // physical `@rbxts/vide` is reachable by two routes: directly, and through
+    // the workspace link `@rbxts/svg-vide/node_modules/@rbxts/vide`. It finds
+    // the nested one first, and emits a path that exists in this repository and
+    // nowhere else — a published `@rbxts/svg-vide` ships only `out/`.
+    //
+    // This pins the import to the route a real consumer has. It changes nothing
+    // about *which* copy is loaded — there is one — only how it is named.
+    // pnpm exposes one physical copy of a shared dependency by several routes:
+    // this project's own `node_modules`, and one nested inside every workspace
+    // package that also depends on it. roblox-ts names whichever route
+    // TypeScript resolved, so without these the emitted Luau requires
+    // `@rbxts/lucide-vide/node_modules/@rbxts/svg` — a *second* core, with its
+    // own render cache and renderer registry, and no error to tell you. A
+    // published install has no nesting and so never hits it; a workspace does.
+    // See the "Two copies of the core" section of docs/STUDIO-VERIFY-VIDE.md.
+    "paths": {
+      "@rbxts/vide": [
+        "node_modules/@rbxts/vide"
+      ],
+      "@rbxts/svg": [
+        "node_modules/@rbxts/svg"
+      ],
+      "@rbxts/svg-vide": [
+        "node_modules/@rbxts/svg-vide"
+      ]
+    },
+    "typeRoots": [
+      "node_modules/@rbxts"
+    ],
+    "rootDir": "src",
+    "outDir": "out",
+    "declaration": false,
+    "preserveSymlinks": true,
+    "plugins": [
+      {
+        "transform": "@rbxts/svg-transformer"
+      }
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

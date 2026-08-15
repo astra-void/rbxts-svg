@@ -1,0 +1,25 @@
+{
+  "name": "rbxts-svg-example-vide",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Example of consuming compiled SVG assets from Vide",
+  "scripts": {
+    "svg": "rbxts-svg build",
+    "svg:watch": "rbxts-svg watch",
+    "build": "pnpm run svg && rbxtsc",
+    "watch": "node scripts/watch.mjs",
+    "typecheck": "pnpm run svg && tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/lucide-vide": "workspace:*",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/svg-compiler": "workspace:*",
+    "@rbxts/svg-transformer": "workspace:*",
+    "@rbxts/svg-vide": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "@rbxts/vide": "^0.6.1",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@rbxts/svg-react",
+  "version": "0.1.0",
+  "description": "React bindings for @rbxts/svg",
+  "license": "MIT",
+  "main": "out/init.luau",
+  "types": "out/index.d.ts",
+  "files": [
+    "out"
+  ],
+  "scripts": {
+    "build": "rbxtsc --type=package",
+    "watch": "rbxtsc -w --type=package",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@rbxts/react": "^17.3.0",
+    "@rbxts/svg": "^0.1.0"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/react": "^17.3.7-ts.2",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

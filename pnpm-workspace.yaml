@@ -1,0 +1,14 @@
+packages:
+  - "packages/*"
+  # The napi-rs crate is also an npm package: `napi build` emits `index.js` and
+  # `index.d.ts` next to `Cargo.toml`, and the per-platform `.node` binaries are
+  # published from `crates/svg-node/npm/*`. This is the standard napi-rs
+  # monorepo layout.
+  - "crates/svg-node"
+  - "examples/*"
+  # The Lucide generator. Not published: it is how the two Lucide packages are
+  # produced, and it is the only thing in the repository that knows what
+  # "Lucide" is.
+  - "tools/*"
+minimumReleaseAgeExclude:
+  - lucide-static@1.31.0

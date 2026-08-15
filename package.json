@@ -1,0 +1,34 @@
+{
+  "name": "rbxts-svg-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "First-class SVG support for the roblox-ts ecosystem",
+  "license": "MIT",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": "^20.17.0 || ^22.13.0 || >= 23.5.0"
+  },
+  "scripts": {
+    "build": "pnpm run build:native && pnpm run build:ts",
+    "build:native": "pnpm --filter @rbxts/svg-native run build",
+    "build:native:debug": "pnpm --filter @rbxts/svg-native run build:debug",
+    "build:ts": "pnpm --recursive --filter \"!@rbxts/svg-native\" run build",
+    "generate:lucide": "pnpm --filter @rbxts-svg/lucide-generator run build && node tools/lucide/dist/cli.js",
+    "check:lucide": "pnpm --filter @rbxts-svg/lucide-generator run build && node tools/lucide/dist/cli.js --check",
+    "test": "pnpm run test:rust && pnpm run test:node && pnpm run test:luau",
+    "test:rust": "cargo test --workspace",
+    "test:node": "vitest run",
+    "test:luau": "node tests/luau/bundle.mjs && luau tests/luau/spec.luau && luau tests/luau/raster.luau && luau tests/luau/vide.luau",
+    "typecheck": "pnpm --recursive run typecheck",
+    "lint": "cargo clippy --workspace --all-targets -- -D warnings",
+    "fmt": "cargo fmt --all"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.8.2",
+    "@rbxts/svg-compiler": "workspace:*",
+    "@rbxts/svg-transformer": "workspace:*",
+    "@types/node": "^22.10.2",
+    "typescript": "5.5.3",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,26 @@
+[package]
+name = "svg-raster"
+description = "Reference CPU rasterizer for the @rbxts/svg semantic model"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# The rasterizer's only dependency is the semantic model it renders. No image
+# codecs, no SVG parser, no platform graphics library: everything below is
+# arithmetic over `svg_core` types, because the point of this crate is to be a
+# specification the Luau backend can be checked against, and a specification
+# with dependencies is a specification nobody can reproduce.
+[dependencies]
+svg-core = { workspace = true }
+
+[dev-dependencies]
+# The compiler, so tests render real `.svg` fixtures through the real pipeline
+# rather than through geometry written by hand to suit the renderer.
+svg-compiler = { workspace = true }
+svg-ir = { workspace = true }
+# The differential oracle and the golden-image writer. Both are test-only on
+# purpose — see the workspace manifest.
+resvg = { workspace = true }
+png = { workspace = true }

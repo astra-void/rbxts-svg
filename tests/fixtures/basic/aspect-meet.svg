@@ -1,0 +1,7 @@
+<!--
+  A wide view box with the default fitting policy. Drawn into a square target
+  it must be letterboxed at 100x50, not stretched.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12" preserveAspectRatio="xMidYMid meet">
+  <rect x="0" y="0" width="24" height="12" fill="#336699"/>
+</svg>

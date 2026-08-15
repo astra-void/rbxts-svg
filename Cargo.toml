@@ -1,0 +1,51 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/svg-core",
+    "crates/svg-ir",
+    "crates/svg-compiler",
+    "crates/svg-raster",
+    "crates/svg-node",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+repository = "https://github.com/rbxts-svg/rbxts-svg"
+
+[workspace.dependencies]
+svg-core = { path = "crates/svg-core", version = "0.1.0" }
+svg-ir = { path = "crates/svg-ir", version = "0.1.0" }
+svg-compiler = { path = "crates/svg-compiler", version = "0.1.0" }
+svg-raster = { path = "crates/svg-raster", version = "0.1.0" }
+
+bitflags = "2.13"
+thiserror = "2.0"
+blake3 = "1.8"
+
+# `usvg` re-exports both `roxmltree` and `tiny_skia_path`, so `svg-compiler`
+# never depends on them directly. That guarantees we always speak to usvg with
+# exactly the types it was compiled against.
+#
+# Default features pull in text shaping (fontdb/harfrust/skrifa) and system font
+# enumeration. We do not render text (see docs/ARCHITECTURE.md), and system font
+# enumeration would make compilation machine-dependent, which would break the
+# determinism requirement. So: no default features.
+usvg = { version = "0.48", default-features = false, features = ["svgz"] }
+
+# Used only to parse `preserveAspectRatio`, which usvg does not expose publicly.
+svgtypes = "0.16"
+
+# Test-only. `resvg` is the differential oracle for `svg-raster`: our renderer
+# must consume *our* IR through *our* rasterization path, and resvg exists only
+# to say whether the result looks right. It is never a dependency of the
+# rasterizer itself. `png` writes golden and debug images, also test-only —
+# `svg-raster` hands back raw RGBA and knows nothing about image containers.
+resvg = { version = "0.48", default-features = false }
+png = "0.18"
+
+[profile.release]
+lto = true
+codegen-units = 1

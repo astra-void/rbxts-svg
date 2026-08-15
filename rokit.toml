@@ -1,0 +1,5 @@
+# Toolchain for the Roblox-side workflow. Rojo is what syncs a built example
+# into Studio for the manual verification passes in `docs/STUDIO-VERIFY*.md`;
+# nothing in `pnpm build` or `pnpm test` needs it.
+[tools]
+rojo = "rojo-rbx/rojo@7.7.0"

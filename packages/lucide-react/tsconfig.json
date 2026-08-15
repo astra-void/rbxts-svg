@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "noLib": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    // @rbxts/types ships generated Roblox API typings that do not currently
+    // typecheck cleanly under TypeScript 5.5 (the version roblox-ts 3 pins).
+    // The errors are entirely upstream and in `.d.ts` files, which is exactly
+    // what skipLibCheck is for. Our own sources are still fully checked.
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "typeRoots": ["node_modules/@rbxts"],
+    "rootDir": "src",
+    "outDir": "out",
+    "declaration": true,
+    "incremental": true,
+    // Outside `out`, because `out` is what gets published: a build cache is
+    // not part of a package, and at ~450 KB it was the largest file in the
+    // Lucide tarballs. `*.tsbuildinfo` is already gitignored.
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "include": ["src"]
+}

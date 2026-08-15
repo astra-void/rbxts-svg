@@ -1,0 +1,26 @@
+{
+  "name": "rbxts-svg-example-react",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Example of consuming compiled SVG assets from React",
+  "scripts": {
+    "svg": "rbxts-svg build",
+    "svg:watch": "rbxts-svg watch",
+    "build": "pnpm run svg && rbxtsc",
+    "watch": "node scripts/watch.mjs",
+    "typecheck": "pnpm run svg && tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/lucide-react": "workspace:*",
+    "@rbxts/react": "^17.3.7-ts.2",
+    "@rbxts/react-roblox": "17.3.7-ts.2",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/svg-compiler": "workspace:*",
+    "@rbxts/svg-react": "workspace:*",
+    "@rbxts/svg-transformer": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  }
+}

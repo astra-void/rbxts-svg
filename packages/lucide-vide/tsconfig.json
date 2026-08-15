@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    // Vide brings its own JSX runtime. `Vide.jsx` is the factory the package
+    // exports for TypeScript consumers (see its `lib.luau`), and it is a
+    // different function from React's with different semantics — a function
+    // component is invoked through `untrack`, and instances are created eagerly
+    // rather than described. Reusing React's factory here would not merely be
+    // untidy, it would not run.
+    "jsx": "react",
+    "jsxFactory": "Vide.jsx",
+    "jsxFragmentFactory": "Vide.Fragment",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "noLib": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    // See the note in `packages/svg-react/tsconfig.json`: @rbxts/types does not
+    // typecheck cleanly under the TypeScript version roblox-ts 3 pins.
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "typeRoots": ["node_modules/@rbxts"],
+    "rootDir": "src",
+    "outDir": "out",
+    "declaration": true,
+    "incremental": true,
+    // Outside `out`, because `out` is what gets published: a build cache is
+    // not part of a package, and at ~450 KB it was the largest file in the
+    // Lucide tarballs. `*.tsbuildinfo` is already gitignored.
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "include": ["src"]
+}

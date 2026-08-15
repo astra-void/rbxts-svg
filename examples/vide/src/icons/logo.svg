@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!--
+    Deliberately not a Lucide icon.
+
+    Lucide is one monochrome `currentColor` stroke; this is fixed multi-colour
+    fill artwork with a stroke on top. It exists in the example so that "any
+    SVG, imported directly" stays visibly distinct from "an icon from a
+    package" — the two go through the same compiler, IR and rasterizer, and
+    only the way you get hold of the asset differs.
+  -->
+  <circle cx="16" cy="16" r="13" fill="#2E6BE6" />
+  <path d="M16 6 L25 22 H7 Z" fill="#FFC46B" />
+  <path d="M16 13 L20.5 22 H11.5 Z" fill="#1B2430" />
+  <circle cx="16" cy="16" r="13" fill="none" stroke="#8EC5FF" stroke-width="2" />
+</svg>

@@ -1,0 +1,55 @@
+{
+  "name": "@rbxts/lucide-react",
+  "version": "0.1.0",
+  "description": "Lucide icons for roblox-ts React, precompiled through @rbxts/svg",
+  "license": "MIT AND ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbxts-svg/rbxts-svg.git",
+    "directory": "packages/lucide-react"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "react",
+    "svg",
+    "icons",
+    "lucide"
+  ],
+  "main": "out/init.luau",
+  "types": "out/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "icons/*": [
+        "out/generated/icons/*"
+      ]
+    }
+  },
+  "files": [
+    "out",
+    "LICENSE",
+    "LICENSE-lucide"
+  ],
+  "scripts": {
+    "build": "rbxtsc --type=package",
+    "watch": "rbxtsc -w --type=package",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@rbxts/react": "^17.3.0",
+    "@rbxts/svg": "^0.1.0",
+    "@rbxts/svg-react": "^0.1.0"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/react": "^17.3.7-ts.2",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/svg-react": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

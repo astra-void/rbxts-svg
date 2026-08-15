@@ -1,0 +1,29 @@
+{
+  "name": "@rbxts/svg-transformer",
+  "version": "0.1.0",
+  "description": "roblox-ts transformer that rewrites `./icon.svg` imports onto their generated modules.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@rbxts/svg-compiler": "workspace:*"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

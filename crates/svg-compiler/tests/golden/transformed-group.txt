@@ -1,0 +1,23 @@
+viewBox 0 0 24 24
+preserveAspectRatio XMidYMid Meet
+features FeatureFlags(HAS_FILL | HAS_STROKE)
+shapes 2
+
+shape 0
+  paintOrder FillThenStroke
+  fill #FF00FF opacity 1.0000 rule NonZero
+  stroke none
+  commands 5
+    M 4.0000 4.0000
+    L 12.0000 4.0000
+    L 12.0000 12.0000
+    L 4.0000 12.0000
+    Z
+
+shape 1
+  paintOrder FillThenStroke
+  fill #000000 opacity 1.0000 rule NonZero
+  stroke #00FFFF opacity 1.0000 width 2.0000 cap Butt join Miter miter 4.0000
+  commands 2
+    M 4.0000 16.0000
+    L 12.0000 16.0000

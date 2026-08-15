@@ -1,0 +1,50 @@
+{
+  // `baseUrl`/`paths` pin the shared packages to this project's own copies.
+  // pnpm exposes one physical `@rbxts/svg` by several routes — here, and nested
+  // inside every workspace package that also depends on it — and roblox-ts
+  // names whichever route TypeScript resolved. Without the pins the emitted
+  // Luau requires `@rbxts/lucide-react/node_modules/@rbxts/svg`, which is a
+  // *second* core with its own render cache and renderer registry, and nothing
+  // reports it. A published install has no nesting; a workspace does. See the
+  // "Two copies of the core" section of docs/STUDIO-VERIFY-VIDE.md.
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "noLib": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "typeRoots": [
+      "node_modules/@rbxts"
+    ],
+    "rootDir": "src",
+    "outDir": "out",
+    "declaration": false,
+    "preserveSymlinks": true,
+    "plugins": [
+      {
+        "transform": "@rbxts/svg-transformer"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@rbxts/svg": [
+        "node_modules/@rbxts/svg"
+      ],
+      "@rbxts/svg-react": [
+        "node_modules/@rbxts/svg-react"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}

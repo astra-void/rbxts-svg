@@ -1,0 +1,22 @@
+[package]
+name = "svg-compiler"
+description = "Compiles SVG source into the @rbxts/svg semantic model via usvg"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+svg-core = { workspace = true }
+usvg = { workspace = true }
+# Only for `preserveAspectRatio` and `viewBox` parsing: usvg parses both but
+# keeps the results private, and it does not retain the view box at all.
+svgtypes = { workspace = true }
+
+# The end-to-end pipeline test needs the serializer. This is a dev-dependency
+# on purpose: `svg-compiler` produces the semantic model and must never depend
+# on how that model is serialized.
+[dev-dependencies]
+svg-ir = { workspace = true }
+blake3 = { workspace = true }

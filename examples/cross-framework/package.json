@@ -1,0 +1,24 @@
+{
+  "name": "rbxts-svg-example-cross-framework",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Fixture proving @rbxts/lucide-react and @rbxts/lucide-vide coexist and share one raster cache",
+  "scripts": {
+    "build": "rbxtsc",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/lucide-react": "workspace:*",
+    "@rbxts/lucide-vide": "workspace:*",
+    "@rbxts/react": "^17.3.7-ts.2",
+    "@rbxts/react-roblox": "17.3.7-ts.2",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/svg-react": "workspace:*",
+    "@rbxts/svg-vide": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "@rbxts/vide": "^0.6.1",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  }
+}

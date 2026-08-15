@@ -1,0 +1,34 @@
+{
+  "name": "@rbxts/svg-native",
+  "version": "0.1.0",
+  "description": "Prebuilt native compiler binary for @rbxts/svg. Not intended for direct use — see @rbxts/svg-compiler.",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "napi": {
+    "binaryName": "svg-native",
+    "packageName": "@rbxts/svg-native",
+    "targets": [
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin",
+      "x86_64-pc-windows-msvc",
+      "aarch64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-unknown-linux-gnu"
+    ]
+  },
+  "scripts": {
+    "build": "napi build --platform --release --js index.js --dts index.d.ts",
+    "build:debug": "napi build --platform --js index.js --dts index.d.ts",
+    "create-npm-dirs": "napi create-npm-dirs",
+    "artifacts": "napi artifacts",
+    "prepublishOnly": "napi prepublish --skip-gh-release"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.8.2"
+  }
+}

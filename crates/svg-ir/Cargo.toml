@@ -1,0 +1,11 @@
+[package]
+name = "svg-ir"
+description = "Versioned, compact serialization format bridging the @rbxts/svg compiler and its runtimes"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+svg-core = { workspace = true }

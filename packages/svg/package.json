@@ -1,0 +1,25 @@
+{
+  "name": "@rbxts/svg",
+  "version": "0.1.0",
+  "description": "Framework-neutral compiled SVG assets for roblox-ts",
+  "license": "MIT",
+  "main": "out/init.luau",
+  "types": "out/index.d.ts",
+  "files": [
+    "out"
+  ],
+  "scripts": {
+    "build": "rbxtsc --type=package",
+    "watch": "rbxtsc -w --type=package",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/types": "^1.0.942",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@rbxts/svg-vide",
+  "version": "0.1.0",
+  "description": "Vide bindings for @rbxts/svg",
+  "license": "MIT",
+  "main": "out/init.luau",
+  "types": "out/index.d.ts",
+  "files": [
+    "out"
+  ],
+  "scripts": {
+    "build": "rbxtsc --type=package",
+    "watch": "rbxtsc -w --type=package",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@rbxts/svg": "^0.1.0",
+    "@rbxts/vide": "^0.6.1"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "3.0.0-types.0",
+    "@rbxts/svg": "workspace:*",
+    "@rbxts/types": "^1.0.942",
+    "@rbxts/vide": "^0.6.1",
+    "roblox-ts": "^3.0.0",
+    "typescript": "5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
