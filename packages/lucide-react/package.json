@@ -5,8 +5,12 @@
   "license": "MIT AND ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rbxts-svg/rbxts-svg.git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
     "directory": "packages/lucide-react"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/lucide-react#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
   },
   "keywords": [
     "roblox",

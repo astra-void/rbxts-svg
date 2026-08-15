@@ -3,8 +3,27 @@
   "version": "0.1.0",
   "description": "Prebuilt native compiler binary for @rbxts/svg. Not intended for direct use — see @rbxts/svg-compiler.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "crates/svg-node"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "svg",
+    "napi-rs",
+    "native"
+  ],
   "main": "index.js",
   "types": "index.d.ts",
+  "engines": {
+    "node": "^20.17.0 || ^22.13.0 || >= 23.5.0"
+  },
   "files": [
     "index.js",
     "index.d.ts"
@@ -26,9 +45,12 @@
     "build:debug": "napi build --platform --js index.js --dts index.d.ts",
     "create-npm-dirs": "napi create-npm-dirs",
     "artifacts": "napi artifacts",
-    "prepublishOnly": "napi prepublish --skip-gh-release"
+    "prepublishOnly": "napi prepublish"
   },
   "devDependencies": {
     "@napi-rs/cli": "^3.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -25,21 +25,28 @@ import { fileURLToPath } from "node:url";
 const projectDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const bin = (name) => join(projectDir, "node_modules", ".bin", name);
 
+/**
+ * A project outside this repository runs the `rbxts-svg` bin. Inside it, the
+ * bin cannot be relied on: pnpm links a workspace package's bin at install
+ * time, and `@rbxts/svg-compiler/dist/cli.js` does not exist until the compiler
+ * has been built — which is after install. Going through the package's own
+ * entry point works either way.
+ */
+const svgCli = join(projectDir, "node_modules", "@rbxts", "svg-compiler", "dist", "cli.js");
+
 /** Compile once up front: rbxtsc's first pass needs the generated modules. */
-const seed = spawnSync(bin("rbxts-svg"), ["build"], {
+const seed = spawnSync(process.execPath, [svgCli, "build"], {
 	cwd: projectDir,
 	stdio: "inherit",
-	shell: process.platform === "win32",
 });
 if (seed.status !== 0) {
 	process.exit(seed.status ?? 1);
 }
 
 const children = [
-	spawn(bin("rbxts-svg"), ["watch"], {
+	spawn(process.execPath, [svgCli, "watch"], {
 		cwd: projectDir,
 		stdio: "inherit",
-		shell: process.platform === "win32",
 	}),
 	spawn(bin("rbxtsc"), ["-w"], {
 		cwd: projectDir,

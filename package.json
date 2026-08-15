@@ -4,6 +4,14 @@
   "private": true,
   "description": "First-class SVG support for the roblox-ts ecosystem",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
   "packageManager": "pnpm@11.10.0",
   "engines": {
     "node": "^20.17.0 || ^22.13.0 || >= 23.5.0"
@@ -21,7 +29,9 @@
     "test:luau": "node tests/luau/bundle.mjs && luau tests/luau/spec.luau && luau tests/luau/raster.luau && luau tests/luau/vide.luau",
     "typecheck": "pnpm --recursive run typecheck",
     "lint": "cargo clippy --workspace --all-targets -- -D warnings",
-    "fmt": "cargo fmt --all"
+    "fmt": "cargo fmt --all",
+    "release:preflight": "node scripts/preflight.mjs",
+    "release:dry-run": "pnpm run release:preflight && pnpm publish --recursive --no-git-checks --dry-run --ignore-scripts"
   },
   "devDependencies": {
     "@napi-rs/cli": "^3.8.2",

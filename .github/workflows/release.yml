@@ -1,0 +1,243 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Build and pack everything, but publish nothing"
+        type: boolean
+        default: true
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Cheap, and first: a tag that disagrees with the manifests is a release that
+  # would publish the wrong version number, and finding that out after fifteen
+  # minutes of Rust builds helps nobody.
+  guard:
+    name: Check the tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tagged="${GITHUB_REF_NAME#v}"
+          declared=$(node -p "require('./packages/svg/package.json').version")
+          if [ "$tagged" != "$declared" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package version $declared"
+            exit 1
+          fi
+          echo "Releasing $declared."
+
+  # One job per published binary. `@rbxts/svg-native` declares six targets and
+  # the main package lists all six as optionalDependencies, so a target that
+  # fails here must fail the release rather than publish a package that cannot
+  # resolve a binary on that platform.
+  native:
+    name: ${{ matrix.target }}
+    needs: guard
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            runner: macos-latest
+          - target: x86_64-apple-darwin
+            runner: macos-13
+          - target: x86_64-pc-windows-msvc
+            runner: windows-latest
+          - target: aarch64-pc-windows-msvc
+            runner: windows-latest
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-latest
+            # A glibc cross-compile. napi-rs ships the sysroot and linker for
+            # it, which is what `--use-napi-cross` selects.
+            cross: "--use-napi-cross"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        working-directory: crates/svg-node
+        run: >
+          pnpm exec napi build
+          --platform --release
+          --target ${{ matrix.target }}
+          --js index.js --dts index.d.ts
+          ${{ matrix.cross }}
+
+      # `napi artifacts` in the publish job reassembles these into
+      # `crates/svg-node/npm/<platform>/`, matching on the file name.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bindings-${{ matrix.target }}
+          path: crates/svg-node/*.node
+          if-no-files-found: error
+          retention-days: 1
+
+      # `index.js` and `index.d.ts` are the JS glue napi generates alongside the
+      # binary. They are gitignored, identical whichever target produced them,
+      # and they are what `@rbxts/svg-native` actually publishes — without them
+      # the publish job cannot typecheck `@rbxts/svg-compiler` against the
+      # native module, and the package would ship empty. One job uploads them.
+      - uses: actions/upload-artifact@v4
+        if: matrix.target == 'x86_64-unknown-linux-gnu'
+        with:
+          name: napi-glue
+          path: |
+            crates/svg-node/index.js
+            crates/svg-node/index.d.ts
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish
+    needs: native
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Required for npm provenance: npm verifies the build against this
+      # workflow run, and the resulting packages show a "Built and signed"
+      # badge. Publishing without it still works; the badge does not appear.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Collect native binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: crates/svg-node/artifacts
+          pattern: bindings-*
+          merge-multiple: true
+
+      - name: Collect the napi glue
+        uses: actions/download-artifact@v4
+        with:
+          name: napi-glue
+          path: crates/svg-node
+
+      - name: Assemble platform packages
+        working-directory: crates/svg-node
+        run: |
+          pnpm exec napi create-npm-dirs
+          pnpm exec napi artifacts --output-dir artifacts
+
+      # Everything below runs the real compiler, so this runner needs a binary
+      # it can actually load. A published `@rbxts/svg-native` finds one through
+      # optionalDependencies; here those packages do not exist yet, and napi's
+      # loader falls back to a sibling `.node` before it tries the registry.
+      - name: Put this runner's binary next to the glue
+        run: cp crates/svg-node/npm/linux-x64-gnu/*.node crates/svg-node/
+
+      # The native binary already exists; this builds every TypeScript and
+      # roblox-ts package on top of it. `out/` and `dist/` are what actually
+      # gets published, and neither is committed.
+      - run: pnpm run build:ts
+
+      - name: Preflight
+        run: pnpm run release:preflight -- --native
+
+      # The full suite against exactly the artifacts about to be published.
+      - name: Install Luau
+        env:
+          LUAU_VERSION: "0.734"
+        run: |
+          curl -fsSL -o luau.zip \
+            "https://github.com/luau-lang/luau/releases/download/${LUAU_VERSION}/luau-ubuntu.zip"
+          unzip -q luau.zip -d "$HOME/.luau"
+          chmod +x "$HOME/.luau/luau"
+          echo "$HOME/.luau" >> "$GITHUB_PATH"
+      - run: pnpm run test:node
+      - run: pnpm run test:luau
+
+      # `--ignore-scripts` is not optional here. `@rbxts/svg-native`'s
+      # prepublishOnly hook is `napi prepublish`, which publishes the six
+      # platform packages itself — a real publish, from inside what is supposed
+      # to be a rehearsal, because pnpm's --dry-run governs pnpm's own publish
+      # and not what a lifecycle script decides to do.
+      - name: Pack (dry run)
+        if: github.event_name == 'workflow_dispatch'
+        run: pnpm publish --recursive --no-git-checks --dry-run --ignore-scripts
+
+      # Order matters. `@rbxts/svg-native` runs `napi prepublish` from its own
+      # prepublishOnly hook, which publishes the six platform packages it
+      # depends on before it publishes itself; everything else can only resolve
+      # once that is done. pnpm publishes in topological order, so the
+      # dependents follow on their own.
+      - name: Publish to npm
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
+        run: pnpm publish --recursive --no-git-checks --access public
+
+  github-release:
+    name: GitHub release
+    needs: publish
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create the release from CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          # The section for this version: from its heading to whatever ends it —
+          # the next heading, or the link definitions at the foot of the file.
+          # Prefix matching rather than a regex, because building one out of a
+          # version number means escaping `[` through two levels of quoting.
+          awk -v head="## [$version]" '
+            index($0, head) == 1              { capture = 1; next }
+            capture && index($0, "## [") == 1 { exit }
+            capture && index($0, "[") == 1    { exit }
+            capture                           { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::warning::no CHANGELOG.md section for $version"
+            echo "See CHANGELOG.md." > notes.md
+          fi
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file notes.md \
+            --verify-tag

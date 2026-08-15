@@ -3,6 +3,23 @@
   "version": "0.1.0",
   "description": "Build-time SVG compiler for @rbxts/svg. Wraps the native binary behind a stable TypeScript API.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "packages/compiler"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/compiler#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "svg",
+    "compiler",
+    "cli",
+    "build-tool"
+  ],
   "type": "commonjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +36,9 @@
   },
   "bin": {
     "rbxts-svg": "dist/cli.js"
+  },
+  "engines": {
+    "node": "^20.17.0 || ^22.13.0 || >= 23.5.0"
   },
   "files": [
     "dist"

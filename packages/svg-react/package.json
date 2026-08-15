@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "React bindings for @rbxts/svg",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "packages/svg-react"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/svg-react#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "react",
+    "svg",
+    "vector"
+  ],
   "main": "out/init.luau",
   "types": "out/index.d.ts",
   "files": [

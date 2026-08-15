@@ -3,9 +3,28 @@
   "version": "0.1.0",
   "description": "roblox-ts transformer that rewrites `./icon.svg` imports onto their generated modules.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "packages/transformer"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/transformer#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "svg",
+    "transformer",
+    "typescript"
+  ],
   "type": "commonjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "engines": {
+    "node": "^20.17.0 || ^22.13.0 || >= 23.5.0"
+  },
   "files": [
     "dist"
   ],

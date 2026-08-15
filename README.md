@@ -1,5 +1,9 @@
 # `@rbxts/svg`
 
+[![CI](https://github.com/astra-void/rbxts-svg/actions/workflows/ci.yml/badge.svg)](https://github.com/astra-void/rbxts-svg/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@rbxts/svg)](https://www.npmjs.com/package/@rbxts/svg)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
+
 First-class SVG support for the [roblox-ts](https://roblox-ts.com) ecosystem.
 
 SVG files are compiled **at build time** — parsed, normalized and lowered into a
@@ -142,6 +146,28 @@ fact rather than a claim. `tests/integration/vide.test.ts` asserts it.
 
 You never need `cargo` or `rustc` to use `@rbxts/svg`: the native compiler ships
 prebuilt per platform.
+
+---
+
+## Install
+
+Pick the binding you use; both need the runtime and the build-time compiler.
+
+```bash
+# React
+npm install @rbxts/svg @rbxts/svg-react
+npm install --save-dev @rbxts/svg-compiler @rbxts/svg-transformer
+
+# Vide
+npm install @rbxts/svg @rbxts/svg-vide
+npm install --save-dev @rbxts/svg-compiler @rbxts/svg-transformer
+
+# …and the Lucide set, if you want it
+npm install @rbxts/lucide-react      # or @rbxts/lucide-vide
+```
+
+The native compiler ships prebuilt for macOS, Linux and Windows on x64 and
+arm64, so using any of this needs no Rust toolchain.
 
 ---
 
@@ -437,7 +463,24 @@ node tests/luau/lucide-bench.mjs   # what the icon set costs to load and draw
 ```
 
 Contributing to the compiler requires a Rust toolchain
-([rustup](https://rustup.rs)); using `@rbxts/svg` does not.
+([rustup](https://rustup.rs)); using `@rbxts/svg` does not. The Luau suites also
+need [`luau`](https://github.com/luau-lang/luau/releases) on your `PATH`.
+
+CI runs all three suites on Linux, macOS and Windows
+([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+
+## Releasing
+
+Every package ships at one version, from one `v*` tag, through
+[`.github/workflows/release.yml`](.github/workflows/release.yml). The runbook —
+what gets published, how the six native binaries are built and ordered ahead of
+everything that depends on them, and how to rehearse a release without
+publishing — is in [`docs/RELEASING.md`](docs/RELEASING.md).
+
+```bash
+pnpm run release:preflight   # is this tree publishable?
+pnpm run release:dry-run     # preflight, then pack every tarball
+```
 
 ## Licence
 

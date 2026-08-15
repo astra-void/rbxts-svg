@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "Vide bindings for @rbxts/svg",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "packages/svg-vide"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/svg-vide#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "vide",
+    "svg",
+    "vector"
+  ],
   "main": "out/init.luau",
   "types": "out/index.d.ts",
   "files": [

@@ -26,5 +26,9 @@ tests/luau/vide-sources.luau
 
 .DS_Store
 
+# A whole-repository text dump, produced by tooling that wants one file. Useful
+# locally, never something to version.
+digest.txt
+
 # Generated inputs for the Lucide benchmark (see tests/luau/lucide-bench.mjs).
 tests/luau/lucide-fixtures.luau

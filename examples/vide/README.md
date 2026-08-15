@@ -38,9 +38,13 @@ import { Svg } from "@rbxts/svg-vide";
 
 Two things make that import work, both wired up here:
 
-- `pnpm run svg` (`rbxts-svg build`) compiles every `src/**/*.svg` into a
-  generated module under `src/svg-cache/`, plus the ambient declaration that
-  types the import as `SvgAsset`.
+- `pnpm run svg` compiles every `src/**/*.svg` into a generated module under
+  `src/svg-cache/`, plus the ambient declaration that types the import as
+  `SvgAsset`. In a project outside this repository that script is just
+  `rbxts-svg build`; here it invokes the same CLI through
+  `node_modules/@rbxts/svg-compiler`, because pnpm links a workspace package's
+  bin at install time and this repository's compiler has not been built yet at
+  that point.
 - `@rbxts/svg-transformer`, registered in `tsconfig.json`'s
   `compilerOptions.plugins`, rewrites each specifier onto its generated module
   during `rbxtsc`.

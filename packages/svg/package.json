@@ -3,6 +3,23 @@
   "version": "0.1.0",
   "description": "Framework-neutral compiled SVG assets for roblox-ts",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-void/rbxts-svg.git",
+    "directory": "packages/svg"
+  },
+  "homepage": "https://github.com/astra-void/rbxts-svg/tree/main/packages/svg#readme",
+  "bugs": {
+    "url": "https://github.com/astra-void/rbxts-svg/issues"
+  },
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "svg",
+    "vector",
+    "editableimage",
+    "rasterizer"
+  ],
   "main": "out/init.luau",
   "types": "out/index.d.ts",
   "files": [

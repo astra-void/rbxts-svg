@@ -1,2 +1,9 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+#
+# `eol=lf` is not cosmetic here. Almost everything this repository tests is a
+# byte-exact comparison — the compiler's golden snapshots, the IR hashes, the
+# Luau rasters checked against Rust-generated goldens, and the committed Lucide
+# modules that `check:lucide` regenerates and diffs. A CRLF checkout makes every
+# one of those fail on Windows and nowhere else, so the working tree is LF on
+# every platform, not just in the index.
+* text=auto eol=lf

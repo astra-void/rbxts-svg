@@ -4,8 +4,8 @@
   "private": true,
   "description": "Example of consuming compiled SVG assets from Vide",
   "scripts": {
-    "svg": "rbxts-svg build",
-    "svg:watch": "rbxts-svg watch",
+    "svg": "node node_modules/@rbxts/svg-compiler/dist/cli.js build",
+    "svg:watch": "node node_modules/@rbxts/svg-compiler/dist/cli.js watch",
     "build": "pnpm run svg && rbxtsc",
     "watch": "node scripts/watch.mjs",
     "typecheck": "pnpm run svg && tsc -p tsconfig.json --noEmit"
